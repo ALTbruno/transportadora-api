@@ -1,4 +1,4 @@
-package com.ALTbruno.transportadoraapi.controller;
+package com.ALTbruno.transportadoraapi.api.controller;
 
 import com.ALTbruno.transportadoraapi.domain.model.Cliente;
 import com.ALTbruno.transportadoraapi.domain.repository.ClienteRepository;
