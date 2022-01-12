@@ -1,4 +1,4 @@
-package com.ALTbruno.transportadoraapi.model;
+package com.ALTbruno.transportadoraapi.domain.model;
 
 import javax.persistence.*;
 import java.util.Objects;
