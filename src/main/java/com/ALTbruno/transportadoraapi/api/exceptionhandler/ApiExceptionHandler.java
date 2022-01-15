@@ -1,5 +1,6 @@
 package com.ALTbruno.transportadoraapi.api.exceptionhandler;
 
+import com.ALTbruno.transportadoraapi.domain.exception.EntidadeNaoEncontradaException;
 import com.ALTbruno.transportadoraapi.domain.exception.NegocioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -44,6 +45,19 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		problema.setCampos(campos);
 
 		return handleExceptionInternal(ex, problema, headers, status, request);
+	}
+
+	@ExceptionHandler(EntidadeNaoEncontradaException.class)
+	public ResponseEntity<Object> handleNegocio(EntidadeNaoEncontradaException ex, WebRequest request) {
+
+		HttpStatus status = HttpStatus.NOT_FOUND;
+
+		Problema problema = new Problema();
+		problema.setStatus(status.value());
+		problema.setDataHora(OffsetDateTime.now());
+		problema.setTitulo(ex.getMessage());
+
+		return handleExceptionInternal(ex, problema, new HttpHeaders(), status, request);
 	}
 
 	@ExceptionHandler(NegocioException.class)

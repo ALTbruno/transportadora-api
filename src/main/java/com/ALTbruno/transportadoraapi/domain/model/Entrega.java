@@ -10,6 +10,8 @@ import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -42,6 +44,9 @@ public class Entrega {
 
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private OffsetDateTime dataFinalizacao;
+
+	@OneToMany(mappedBy = "entrega", cascade = CascadeType.ALL)
+	private List<Ocorrencia> ocorrencias = new ArrayList<>();
 
 
 	public Long getId() {
@@ -100,6 +105,14 @@ public class Entrega {
 		this.dataFinalizacao = dataFinalizacao;
 	}
 
+	public List<Ocorrencia> getOcorrencias() {
+		return ocorrencias;
+	}
+
+	public void setOcorrencias(List<Ocorrencia> ocorrencias) {
+		this.ocorrencias = ocorrencias;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -111,5 +124,16 @@ public class Entrega {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+
+	public Ocorrencia adicionarOcorrencia(String descricao) {
+		Ocorrencia ocorrencia = new Ocorrencia();
+		ocorrencia.setDescricao(descricao);
+		ocorrencia.setDataRegistro(OffsetDateTime.now());
+		ocorrencia.setEntrega(this);
+
+		this.getOcorrencias().add(ocorrencia);
+
+		return ocorrencia;
 	}
 }
