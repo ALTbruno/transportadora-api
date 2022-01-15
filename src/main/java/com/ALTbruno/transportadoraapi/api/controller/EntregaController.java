@@ -7,6 +7,7 @@ import com.ALTbruno.transportadoraapi.api.dto.input.EntregaInputDTO;
 import com.ALTbruno.transportadoraapi.domain.model.Entrega;
 import com.ALTbruno.transportadoraapi.domain.repository.EntregaRepository;
 import com.ALTbruno.transportadoraapi.domain.service.EntregaService;
+import com.ALTbruno.transportadoraapi.domain.service.FinalizacaoEntregaService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,9 @@ public class EntregaController {
 	@Autowired
 	private EntregaAssembler entregaAssembler;
 
+	@Autowired
+	private FinalizacaoEntregaService finalizacaoEntregaService;
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public EntregaDTO solicitar(@Valid @RequestBody EntregaInputDTO entregaInputDTO) {
@@ -49,6 +53,11 @@ public class EntregaController {
 		return entregaRepository.findById(entregaId)
 				.map(entrega -> ResponseEntity.ok(entregaAssembler.toModel(entrega)))
 				.orElse(ResponseEntity.notFound().build());
+	}
+	@PutMapping("/{entregaId}/finalizacao")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void finalizar(@PathVariable Long entregaId) {
+		finalizacaoEntregaService.finalizar(entregaId);
 	}
 
 }

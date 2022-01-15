@@ -1,6 +1,7 @@
 package com.ALTbruno.transportadoraapi.domain.model;
 
 import com.ALTbruno.transportadoraapi.domain.ValidationGroups;
+import com.ALTbruno.transportadoraapi.domain.exception.NegocioException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -135,5 +136,18 @@ public class Entrega {
 		this.getOcorrencias().add(ocorrencia);
 
 		return ocorrencia;
+	}
+
+	public boolean podeSerFinalizada() {
+		return StatusEntrega.PENDENTE.equals(getStatus());
+	}
+
+	public void finalizar() {
+
+		if (!podeSerFinalizada()) {
+			throw new NegocioException("Entrega não pode ser finalizada");
+		}
+		setStatus(StatusEntrega.FINALIZADA);
+		setDataFinalizacao(OffsetDateTime.now());
 	}
 }
