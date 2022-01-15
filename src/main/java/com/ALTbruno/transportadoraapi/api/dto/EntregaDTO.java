@@ -8,7 +8,7 @@ import java.time.OffsetDateTime;
 public class EntregaDTO {
 
 	private Long id;
-	private String nomeCliente;
+	private ClienteResumoDTO cliente;
 	private DestinatarioDTO destinatario;
 	private BigDecimal taxa;
 	private StatusEntrega status;
@@ -24,12 +24,12 @@ public class EntregaDTO {
 		this.id = id;
 	}
 
-	public String getNomeCliente() {
-		return nomeCliente;
+	public ClienteResumoDTO getCliente() {
+		return cliente;
 	}
 
-	public void setNomeCliente(String nomeCliente) {
-		this.nomeCliente = nomeCliente;
+	public void setCliente(ClienteResumoDTO cliente) {
+		this.cliente = cliente;
 	}
 
 	public DestinatarioDTO getDestinatario() {
